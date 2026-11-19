@@ -1,0 +1,73 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  age       Int
+  photo     String
+  bio       String
+  city      String
+  interests String   // JSON stringified array of strings
+  createdAt DateTime @default(now())
+
+  swipes    Swipe[]
+  matches   Match[]
+}
+
+model Profile {
+  id           String        @id @default(uuid())
+  name         String
+  age          Int
+  photo        String
+  bio          String
+  cityOrCollege String
+  interests    String        // JSON stringified array of strings
+  createdAt    DateTime      @default(now())
+
+  swipes       Swipe[]
+  matches      Match[]
+  incomingLikes IncomingLike[]
+}
+
+model Swipe {
+  id        String   @id @default(uuid())
+  userId    String
+  profileId String
+  action    String   // "LIKE" or "PASS"
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, profileId])
+}
+
+model IncomingLike {
+  id        String   @id @default(uuid())
+  profileId String
+  userId    String
+  createdAt DateTime @default(now())
+
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, userId])
+}
+
+model Match {
+  id        String   @id @default(uuid())
+  userId    String
+  profileId String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, profileId])
+}

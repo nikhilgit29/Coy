@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #FAFAFA;
+    color: #17141E;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Custom Coy styles */
+.coy-card-shadow {
+  box-shadow: 4px 4px 0px #17141E;
+}
+
+.coy-card-shadow-sm {
+  box-shadow: 2px 2px 0px #17141E;
+}
+
+.coy-card-shadow-lg {
+  box-shadow: 6px 6px 0px #17141E;
+}
+
+.coy-button-press {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.coy-button-press:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #17141E;
+}
